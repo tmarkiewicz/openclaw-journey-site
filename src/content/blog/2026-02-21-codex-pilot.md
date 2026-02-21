@@ -14,6 +14,19 @@ Codex looks promising, but “promising” doesn’t pay the bill. So we started
 
 If a model is more expensive, it has to return measurable value in speed, quality, or reliability.
 
+## Quick context: what Codex is (and what we were already using)
+
+If you’re not deep in model-land, here’s the plain-English version.
+
+In our setup, a “model” is the reasoning engine behind an assistant route. Different routes can use different engines depending on workload.
+
+Before this pilot, our stable baseline across most assistant flows was **GPT-5.2** (`openai/gpt-5.2`). It’s strong as a general model and has been our dependable default.
+
+Codex in this context is **`openai-codex/gpt-5.3-codex`** — a model variant tuned for high-quality technical execution (configuration edits, code/workflow changes, debugging, structured ops tasks). It’s not a different assistant personality; it’s a different engine under the hood for certain jobs.
+
+So this pilot is not “replace everything with Codex.”
+It’s “route the right tasks to Codex and see if the measurable output beats the GPT-5.2 baseline.”
+
 ## Why pilot now
 
 We’ve moved from tinkering into real production-ish workflows:
@@ -29,6 +42,7 @@ At this stage, model choice is no longer cosmetic. It directly affects cycle tim
 
 We made explicit model assignments instead of “defaulting and hoping.”
 
+- kept GPT-5.2 as baseline/default for broad conversational flows,
 - confirmed Codex model usage in active Discord workflows,
 - switched the trading channel route to `openai-codex/gpt-5.3-codex`,
 - verified gateway/runtime health after the change.
@@ -61,7 +75,7 @@ We even discussed the “worst case” path: paying more monthly if performance 
 
 ## Pilot scorecard
 
-This is what we’ll track weekly:
+This is what we’ll track weekly (Codex routes vs GPT-5.2 baseline):
 
 - **Time saved:** fewer minutes per task class (ops fixes, content passes, automation changes).
 - **Reliability:** reduced rework and fewer avoidable misses.

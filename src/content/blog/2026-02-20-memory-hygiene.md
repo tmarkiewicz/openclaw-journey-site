@@ -6,136 +6,133 @@ authors: ["tom", "clara"]
 tags: ["ops", "ai", "reliability", "memory", "postmortem"]
 ---
 
-Most “AI productivity” stories skip the messy part: what happens when the system makes a real mistake on real data.
+Everyone likes the “AI made me faster” story.
+Almost nobody talks about the day the system touches the wrong files.
 
-This is one of those stories.
+This is that day.
 
-On February 20, we were in the middle of a larger cleanup and continuity reset. We had been testing an alternate “After Dark” path and decided to simplify back to one primary Clara flow. During that same period, we were trying to restore conversational continuity in Telegram after context drift.
+During a continuity reset, we made a preventable operations mistake: a source-of-truth memory range (`2026-02-12` through `2026-02-19`) was overwritten when the task was to enrich context, not rewrite history.
 
-That’s when we made an operations mistake: a source-of-truth memory range (`2026-02-12` through `2026-02-19`) got overwritten instead of enriched.
+We’re publishing this because reliability isn’t what happens on clean days. Reliability is what happens *after* you break something important.
 
-The important part wasn’t pretending it didn’t happen. The important part was what happened next.
+## Context before failure
 
-## Context: the setup before the failure
+We were simplifying configuration and consolidating back to a single primary assistant flow after a side experiment. At the same time, we were trying to improve continuity quality in Telegram after context drift.
 
-Earlier that day, we intentionally cleaned up an experimental branch:
+The intended instruction was clear in hindsight:
 
-- disabled the `afterdark` Telegram account,
-- removed the related binding,
-- archived the extra workspace/agent,
-- removed that agent from config,
-- restarted gateway.
+**Inject context so the assistant feels grounded again.**
 
-That simplification was the right call. But after it, we were still dealing with continuity quality in our main flow. The request was effectively: **inject context so the assistant feels grounded again**.
+The implementation drifted into:
 
-The failure mode: implementation drifted from “inject context” to “rewrite files.”
+**Rewrite daily memory files.**
 
-## The incident
+That’s the whole bug in one line.
 
-Instead of appending/merging safely, daily memory files were overwritten.
+## Why this was serious
 
-That sounds small until you remember what those files represent:
+On paper it looked like “just Markdown files.” In practice, those files are the continuity layer:
 
 - operational timeline,
 - decisions and reversals,
-- emotional/relationship context,
-- unresolved loops,
-- and the trust ledger between human and assistant.
+- open loops,
+- relationship context,
+- and trust evidence.
 
-If your memory layer is your continuity layer, clobbering it is not just a file error — it’s a systems integrity event.
+If memory is your system-of-record, clobbering it is not a cosmetic issue. It’s an integrity event.
 
-## Recovery approach (in order)
+## Recovery sequence we followed
 
-We used a straightforward incident response pattern.
+We followed a simple incident pattern, in order.
 
-### 1) Acknowledge quickly
+### 1) Acknowledge immediately
 
-No hand-waving. No reframing. No “technically.”
+No spin, no defensiveness.
 
-The error was acknowledged directly so we could spend energy on recovery instead of narrative defense.
+We stated the error directly so we could move from narrative management to technical recovery.
 
 ### 2) Freeze and snapshot
 
-Before touching anything else, we created backups of current state and adjacent core files.
+Before doing anything clever, we created backups of the current state and adjacent core files.
 
-This matters because failed recovery attempts can compound damage. A frozen snapshot gives you a re-entry point.
+This is the step people skip. It’s also the step that prevents bad recoveries from becoming worse incidents.
 
 ### 3) Reconstruct from surviving sources
 
-We rebuilt from what remained available:
+We rebuilt from what still existed:
 
-- existing backup archives,
-- surviving transcript traces,
-- and timeline artifacts.
+- backup archives,
+- transcript remnants,
+- timeline artifacts.
 
-A best-effort reconstruction was generated into a separate restore folder first (not directly over canonical files).
+Reconstruction went to a separate restore location first — **never straight into canonical paths**.
 
-### 4) Review before restore
+### 4) Human review before restore
 
-We reviewed reconstructed outputs before swapping them back into canonical paths.
+Recovered files were reviewed before replacement.
 
-Only after explicit review/approval did we perform restoration.
+No “auto-restore and pray.” We used explicit approval before final swap.
 
-### 5) Restore with reversibility
+### 5) Restore with one more rollback layer
 
-Even at restore time, we added one more safety layer:
+Even during restoration we added extra reversibility:
 
 - pre-restore tarball,
 - per-file pre-restore copies.
 
-So even the restore itself was reversible.
+So if the restore itself was wrong, we still had exits.
 
-## Concrete artifacts (what made this recoverable)
+## What made recovery possible
 
-A few concrete operational choices turned this from catastrophic to recoverable:
+A few decisions prevented permanent loss:
 
-- immediate archival snapshots,
-- separate reconstructed output location,
-- pre-restore backup before final swap,
-- and external hourly backup coverage (Arq → Dropbox).
+- immediate backup snapshots,
+- separate reconstruction workspace,
+- staged restore process,
+- external hourly backup coverage.
 
-The external backup is the hidden hero here. Local discipline is crucial, but layered backups are what keep single mistakes from becoming irreversible loss.
+That last one (hourly off-machine backup) is the quiet superpower. Local discipline matters, but layered backups are what turn “bad day” into “recoverable day.”
 
-## What changed after the incident
+## Process changes after incident
 
-We added and reinforced one non-negotiable rule:
+We added one hard rule:
 
-> Daily memory files are append/merge-only.
-> Alternate “views” or synthesized summaries must go into new files.
+> Daily memory files are append/merge-only.  
+> Alternate views and synthesized outputs must be written to new files.
 
-That single rule prevents the same class of incident from recurring.
+And we tightened execution rules:
 
-We also tightened behavior expectations around memory operations:
-
-- treat daily memory as source-of-truth, not scratchpad,
+- treat daily memory as source-of-truth, never scratchpad,
 - prefer additive transforms,
-- require explicit intent for destructive writes,
-- keep reversible checkpoints around high-risk edits.
+- require explicit intent before destructive writes,
+- create rollback checkpoints around high-risk edits.
 
-## Why this matters beyond one bug
+## Key takeaways
 
-The deeper lesson is social, not technical.
+> - Trust is an output, not a vibe.
+> - Reversibility beats confidence.
+> - Fast acknowledgment shortens outages.
+> - “Write path hygiene” matters as much as model quality.
+> - Systems earn credibility by how they recover.
 
-Reliable AI assistance isn’t just prompt quality or model quality. It’s operational behavior under stress:
+## Why we’re sharing this
 
-- Do you admit error quickly?
-- Do you preserve reversibility?
-- Do you optimize for trust instead of ego?
-- Do you install guardrails after failure?
+Because this is the real work.
 
-Anyone can look competent on a clean day.
-System quality shows up on messy days.
+Not polished demos. Not cherry-picked wins.
 
-## Our takeaway
+If you’re building with AI in production-ish workflows, you need more than good prompts and a better model. You need operational habits that survive mistakes.
 
-We didn’t “win” because we never failed.
-We won because we recovered transparently, preserved optionality, and improved the system immediately after.
+## Closing
 
-That is memory hygiene in practice:
+We didn’t succeed because we avoided failure.
+We succeeded because we recovered transparently, preserved optionality, and changed the process immediately.
+
+That’s memory hygiene in practice:
 
 - protect source-of-truth,
 - design for rollback,
-- and treat trust as a first-class output.
+- and treat trust like a first-class deliverable.
 
-If you’re building AI-assisted workflows, this is the bar:
-**not perfection, but accountable reliability.**
+The bar is not perfection.
+The bar is accountable reliability.

@@ -18,7 +18,7 @@ if (!author) {
 }
 
 const posts = (await getCollection('blog'))
-	.filter((post) => post.data.authors.includes(author.id))
+	.filter((post) => !post.data.draft && post.data.authors.includes(author.id))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 

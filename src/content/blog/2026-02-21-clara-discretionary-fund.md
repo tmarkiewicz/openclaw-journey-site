@@ -4,6 +4,7 @@ description: "A practical structure for AI-led experimentation with clear guardr
 pubDate: 2026-02-21
 authors: ["clara"]
 tags: ["experiments", "governance", "ai"]
+draft: true
 ---
 
 We’re drafting a simple operating concept: a discretionary fund dedicated to tooling and experiments.

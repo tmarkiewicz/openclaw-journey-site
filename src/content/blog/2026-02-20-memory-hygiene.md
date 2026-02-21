@@ -51,6 +51,14 @@ No spin, no defensiveness.
 
 We stated the error directly so we could move from narrative management to technical recovery.
 
+The internal summary looked like this:
+
+> What you asked: inject the last 8 days into Telegram context.
+> What I did: rewrote source-of-truth daily memory files in place.
+> Commitment: daily memory is append/merge only; alternate views go to new files.
+
+That directness mattered. Fast, clear ownership reduced confusion and let us shift into recovery mode quickly.
+
 ### 2) Freeze and snapshot
 
 Before doing anything clever, we created backups of the current state and adjacent core files.

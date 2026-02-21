@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { AUTHORS } from '../../data/authors';
+
+export async function getStaticPaths() {
+	return Object.keys(AUTHORS).map((id) => ({ params: { id } }));
+}
+
+const { id } = Astro.params;
+const author = id ? AUTHORS[id] : undefined;
+
+if (!author) {
+	throw new Error('Author not found');
+}
+
+const posts = (await getCollection('blog'))
+	.filter((post) => post.data.authors.includes(author.id))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={`${author.name} — Posts`} description={author.bio} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>{author.name}</h1>
+			<p>{author.role}</p>
+			<p>{author.bio}</p>
+			<ul>
+				{posts.map((post) => (
+					<li>
+						<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+						<small> — <FormattedDate date={post.data.pubDate} /></small>
+					</li>
+				))}
+			</ul>
+		</main>
+		<Footer />
+	</body>
+</html>

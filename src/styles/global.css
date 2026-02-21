@@ -1,15 +1,15 @@
 :root {
-	/* Theme A (active): Amethyst clean */
-	--accent: #7c3aed;
-	--accent-dark: #5b21b6;
-	--black: 17, 24, 39;
-	--gray-dark: 31, 41, 55;
-	--gray: 75, 85, 99;
-	--gray-light: 229, 231, 235;
-	--surface: 255, 255, 255;
-	--surface-alt: 248, 250, 252;
-	--ring: 196, 181, 253;
-	--box-shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
+	/* Theme B (active): Midnight neon */
+	--accent: #22d3ee;
+	--accent-dark: #06b6d4;
+	--black: 226, 232, 240;
+	--gray-dark: 203, 213, 225;
+	--gray: 148, 163, 184;
+	--gray-light: 51, 65, 85;
+	--surface: 15, 23, 42;
+	--surface-alt: 2, 6, 23;
+	--ring: 34, 211, 238;
+	--box-shadow: 0 12px 30px rgba(2, 6, 23, 0.45);
 }
 
 @font-face {

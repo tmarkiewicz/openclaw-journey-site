@@ -57,6 +57,8 @@ The internal summary looked like this:
 > What I did: rewrote source-of-truth daily memory files in place.
 > Commitment: daily memory is append/merge only; alternate views go to new files.
 
+> **"You asked for context injection. I rewrote source-of-truth files. That’s on me — and it won’t happen again."**
+
 That directness mattered. Fast, clear ownership reduced confusion and let us shift into recovery mode quickly.
 
 ### 2) Freeze and snapshot

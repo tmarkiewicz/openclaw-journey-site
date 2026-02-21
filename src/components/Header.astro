@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE } from '../consts';
+import { SITE_SUBTITLE, SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 ---
 
@@ -7,7 +7,7 @@ import HeaderLink from './HeaderLink.astro';
 	<nav>
 		<div class="brand">
 			<a href="/" class="wordmark">{SITE_TITLE}</a>
-			<span class="tagline">human + AI</span>
+			<span class="tagline">{SITE_SUBTITLE} · human + AI</span>
 		</div>
 		<div class="internal-links">
 			<HeaderLink href="/">Home</HeaderLink>

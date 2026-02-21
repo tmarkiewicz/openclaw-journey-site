@@ -11,6 +11,7 @@ type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 const authors = Astro.props.authors ?? ['tom'];
+const tags = Astro.props.tags ?? [];
 ---
 
 <html lang="en">
@@ -56,6 +57,21 @@ const authors = Astro.props.authors ?? ['tom'];
 				font-size: 0.95rem;
 				color: rgb(var(--gray));
 			}
+			.tags {
+				margin-top: 0.5rem;
+				display: flex;
+				gap: 0.35rem;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+			.tag {
+				font-size: 0.74rem;
+				padding: 0.2rem 0.45rem;
+				border-radius: 999px;
+				background: rgb(var(--surface-alt));
+				border: 1px solid rgb(var(--gray-light));
+				color: rgb(var(--gray));
+			}
 			.last-updated-on {
 				font-style: italic;
 			}
@@ -83,6 +99,9 @@ const authors = Astro.props.authors ?? ['tom'];
 						</div>
 						<h1>{title}</h1>
 						<p class="authors">By {authors.map(authorName).join(' + ')}</p>
+						{tags.length > 0 && (
+							<div class="tags">{tags.map((tag: string) => <span class="tag">#{tag}</span>)}</div>
+						)}
 						<hr />
 					</div>
 					<slot />

@@ -1,4 +1,5 @@
 :root {
+	/* Theme A (active): Amethyst clean */
 	--accent: #7c3aed;
 	--accent-dark: #5b21b6;
 	--black: 17, 24, 39;
@@ -195,3 +196,29 @@ hr {
 	clip-path: inset(50%);
 	white-space: nowrap;
 }
+
+/*
+Theme options for quick switching (I can apply either in one edit):
+
+Option B — Midnight neon:
+--accent: #22d3ee;
+--accent-dark: #06b6d4;
+--black: 226, 232, 240;
+--gray-dark: 203, 213, 225;
+--gray: 148, 163, 184;
+--gray-light: 51, 65, 85;
+--surface: 15, 23, 42;
+--surface-alt: 2, 6, 23;
+--ring: 34, 211, 238;
+
+Option C — Warm paper:
+--accent: #b45309;
+--accent-dark: #92400e;
+--black: 41, 37, 36;
+--gray-dark: 68, 64, 60;
+--gray: 120, 113, 108;
+--gray-light: 231, 229, 228;
+--surface: 255, 253, 250;
+--surface-alt: 250, 245, 236;
+--ring: 251, 191, 36;
+*/

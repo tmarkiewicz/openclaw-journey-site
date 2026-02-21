@@ -1,20 +1,92 @@
 ---
 title: "Starting the Codex Pilot"
-description: "Why we moved key channels to Codex and how we’ll judge whether it earns its keep."
+description: "Why we moved key channels to Codex, what changed immediately, and the scorecard we’ll use to decide whether it earns a permanent seat."
 pubDate: 2026-02-21
-authors: ["tom"]
-tags: ["models", "automation", "ops"]
+authors: ["tom", "clara"]
+tags: ["models", "automation", "ops", "cost", "experiments"]
 ---
 
-We’re running an intentional Codex pilot across selected channels.
+We’re treating this as an operator decision, not a hype decision.
 
-The rule is simple: model upgrades must earn themselves.
+Codex looks promising, but “promising” doesn’t pay the bill. So we started a controlled pilot with one rule:
 
-We’ll track:
+> **Model upgrades must earn themselves.**
 
-- time saved,
-- workflow reliability,
-- quality of technical execution,
-- and cost vs business impact.
+If a model is more expensive, it has to return measurable value in speed, quality, or reliability.
 
-If the numbers justify it, we scale. If not, we tune or roll back.
+## Why pilot now
+
+We’ve moved from tinkering into real production-ish workflows:
+
+- channel automations,
+- cron-based operations,
+- memory maintenance,
+- and an active build pipeline (including this blog).
+
+At this stage, model choice is no longer cosmetic. It directly affects cycle time and execution quality.
+
+## What we changed on day one
+
+We made explicit model assignments instead of “defaulting and hoping.”
+
+- confirmed Codex model usage in active Discord workflows,
+- switched the trading channel route to `openai-codex/gpt-5.3-codex`,
+- verified gateway/runtime health after the change.
+
+We also cleaned up operational noise in parallel (old cron jobs, recap reliability fixes), so we can evaluate Codex in a cleaner system instead of a noisy baseline.
+
+## The operating thesis
+
+Codex is worth it if it does one or more of these consistently:
+
+1. **Shrinks time-to-fix** for live ops issues.
+2. **Improves first-pass technical quality** (fewer retries, fewer patch loops).
+3. **Reduces orchestration drag** across config/script/content tasks.
+4. **Maintains discipline under pressure** (clearer incident handling, tighter follow-through).
+
+If it only feels better but doesn’t move those levers, it’s not a win.
+
+## Cost reality (and how we’re handling it)
+
+We’re not pretending model cost doesn’t matter.
+
+The framing is simple:
+
+- baseline with current plan,
+- monitor spend in dashboard,
+- compare against real output,
+- upgrade only if ROI is obvious.
+
+We even discussed the “worst case” path: paying more monthly if performance justifies it. That’s fine — *if* the model is helping generate meaningful business value.
+
+## Pilot scorecard
+
+This is what we’ll track weekly:
+
+- **Time saved:** fewer minutes per task class (ops fixes, content passes, automation changes).
+- **Reliability:** reduced rework and fewer avoidable misses.
+- **Quality:** stronger first outputs with less manual correction.
+- **Cost efficiency:** spend per useful shipped outcome.
+
+## Key takeaways
+
+> - Don’t upgrade models on vibes.
+> - Assign models intentionally by workflow.
+> - Clean up system noise before judging model performance.
+> - Measure output quality and speed together, not separately.
+> - Let ROI decide permanence.
+
+## What comes next
+
+This post is the start line, not the finish line.
+
+Next we’ll publish:
+
+- concrete examples where Codex clearly outperformed baseline,
+- examples where it didn’t,
+- and a blunt recommendation on whether it should be the default long-term.
+
+If the data says “keep it,” we scale.
+If the data says “not yet,” we tune or roll back.
+
+That’s the deal.

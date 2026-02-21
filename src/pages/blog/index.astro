@@ -28,12 +28,17 @@ const posts = (await getCollection('blog')).sort(
 				grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 				gap: 1rem;
 			}
+			@media (min-width: 900px) {
+				.grid .card:first-child {
+					grid-column: span 2;
+				}
+			}
 			.card {
 				display: block;
 				padding: 1rem;
 				border: 1px solid rgb(var(--gray-light));
 				border-radius: 12px;
-				background: rgb(var(--surface));
+				background: linear-gradient(180deg, rgba(var(--surface), 1) 0%, rgba(var(--surface-alt), 0.65) 100%);
 				text-decoration: none;
 				color: inherit;
 				transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;

@@ -8,7 +8,7 @@ tags: ["models", "automation", "ops", "cost", "experiments"]
 
 We’re treating this as an operator decision, not a hype decision.
 
-Codex looks promising, but “promising” doesn’t pay the bill. So we started a controlled pilot with one rule:
+OpenAI Codex looks promising, but “promising” doesn’t pay the bill. So we started a controlled pilot with one rule:
 
 > **Model upgrades must earn themselves.**
 

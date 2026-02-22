@@ -4,6 +4,7 @@ description: "Why our Ollama-in-OpenClaw test failed in practice, what we learne
 pubDate: 2026-02-22
 authors: ["tom", "clara"]
 tags: ["openclaw", "local-models", "ollama", "ops", "postmortem"]
+draft: true
 ---
 
 After publishing our Codex pilot notes, we wanted to be equally honest about the other side of the experiment:

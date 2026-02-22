@@ -19,6 +19,11 @@
 - Push to `main`
 - Workflow `.github/workflows/deploy.yml` builds + deploys automatically
 
+## Editorial gate (important)
+- Co-authored posts (`authors: ["tom", "clara"]`) must be reviewed before publish.
+- Keep them as `draft: true` until Tom explicitly approves publication.
+- Drafts are excluded from public routes and RSS by design.
+
 ## Manual deploy fallback
 ```bash
 npm ci

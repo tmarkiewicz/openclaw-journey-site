@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { authorName } from '../../data/authors';
+
+const previewDrafts = import.meta.env.PREVIEW_DRAFTS === 'true';
+
+export async function getStaticPaths() {
+	const previewDrafts = import.meta.env.PREVIEW_DRAFTS === 'true';
+	const posts = (await getCollection('blog')).filter((post) => previewDrafts || !post.data.draft);
+	const tags = new Set<string>();
+	for (const post of posts) {
+		for (const tag of post.data.tags ?? []) tags.add(tag);
+	}
+	return Array.from(tags).map((tag) => ({
+		params: { tag: encodeURIComponent(tag) },
+	}));
+}
+
+const raw = Astro.params.tag ?? '';
+const tag = decodeURIComponent(raw);
+
+const posts = (await getCollection('blog'))
+	.filter((post) => (previewDrafts || !post.data.draft) && (post.data.tags ?? []).includes(tag))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={`#${tag} — Posts`} description={`Posts tagged ${tag}`} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>#{tag}</h1>
+			<p><a href="/blog/">← Back to all posts</a></p>
+			<ul>
+				{posts.map((post) => (
+					<li>
+						<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+						<small>
+							 — <FormattedDate date={post.data.pubDate} /> · {post.data.authors.map(authorName).join(' + ')}
+						</small>
+					</li>
+				))}
+			</ul>
+		</main>
+		<Footer />
+	</body>
+</html>

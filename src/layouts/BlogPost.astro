@@ -71,6 +71,11 @@ const tags = Astro.props.tags ?? [];
 				background: rgb(var(--surface-alt));
 				border: 1px solid rgb(var(--gray-light));
 				color: rgb(var(--gray));
+				text-decoration: none;
+			}
+			.tag:hover {
+				border-color: rgba(var(--ring), 0.8);
+				color: var(--accent-dark);
 			}
 			.last-updated-on {
 				font-style: italic;
@@ -100,7 +105,11 @@ const tags = Astro.props.tags ?? [];
 						<h1>{title}</h1>
 						<p class="authors">By {authors.map(authorName).join(' + ')}</p>
 						{tags.length > 0 && (
-							<div class="tags">{tags.map((tag: string) => <span class="tag">#{tag}</span>)}</div>
+							<div class="tags">
+								{tags.map((tag: string) => (
+									<a class="tag" href={`/tags/${encodeURIComponent(tag)}/`}>#{tag}</a>
+								))}
+							</div>
 						)}
 						<hr />
 					</div>

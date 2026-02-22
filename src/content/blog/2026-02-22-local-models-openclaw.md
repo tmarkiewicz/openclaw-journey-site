@@ -9,7 +9,7 @@ draft: true
 
 After publishing our Codex pilot notes, we wanted to be equally honest about the other side of the experiment:
 
-we also tried to run local models through OpenClaw for agent routing, and it did **not** go smoothly.
+We also tried to run local models through OpenClaw for agent routing, and it did **not** go smoothly.
 
 This post is that field report.
 

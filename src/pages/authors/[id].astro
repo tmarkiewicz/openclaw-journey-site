@@ -17,8 +17,10 @@ if (!author) {
 	throw new Error('Author not found');
 }
 
+const previewDrafts = process.env.PREVIEW_DRAFTS === 'true';
+
 const posts = (await getCollection('blog'))
-	.filter((post) => !post.data.draft && post.data.authors.includes(author.id))
+	.filter((post) => (previewDrafts || !post.data.draft) && post.data.authors.includes(author.id))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 

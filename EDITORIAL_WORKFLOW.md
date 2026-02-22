@@ -10,5 +10,14 @@
 3. Publish only after explicit go-ahead (e.g., "publish this post").
 4. On publish: remove `draft: true`, commit, push.
 
+## Local draft preview mode
+- Use local-only preview to view drafts in browser without publishing.
+- In repo root:
+  - `cp .env.example .env`
+  - set `PREVIEW_DRAFTS=true`
+  - run `npm run dev`
+- Drafts will appear in `/blog`, `/authors/*`, and their direct post URLs locally.
+- Production remains safe because `PREVIEW_DRAFTS` is not set there.
+
 ## Safety default
 When in doubt, keep co-authored posts as draft.

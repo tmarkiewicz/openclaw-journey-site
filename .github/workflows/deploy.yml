@@ -37,4 +37,4 @@ jobs:
           RELEASE_PATH="/var/www/openclaw-journey/releases/$TS"
           ssh "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" "mkdir -p $RELEASE_PATH"
           rsync -az --delete dist/ "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:$RELEASE_PATH/"
-          ssh "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" "ln -sfn $RELEASE_PATH /var/www/openclaw-journey/current && sudo systemctl reload caddy"
+          ssh "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" "ln -sfnT $RELEASE_PATH /var/www/openclaw-journey/current && sudo systemctl reload caddy"

@@ -1,0 +1,12 @@
+openclawjourney.com, www.openclawjourney.com {
+    root * /var/www/openclaw-journey/current
+    encode zstd gzip
+    file_server
+
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    }
+}

@@ -1,6 +1,8 @@
 ---
 import { SITE_SUBTITLE, SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
+
+const previewDrafts = import.meta.env.PREVIEW_DRAFTS === 'true';
 ---
 
 <header>
@@ -17,6 +19,9 @@ import HeaderLink from './HeaderLink.astro';
 			<HeaderLink href="/about">About</HeaderLink>
 		</div>
 	</nav>
+	{previewDrafts && (
+		<div class="draft-banner">DRAFT PREVIEW MODE — local only</div>
+	)}
 </header>
 
 <style>
@@ -83,6 +88,19 @@ import HeaderLink from './HeaderLink.astro';
 		color: var(--accent);
 		font-weight: 700;
 		text-decoration: none;
+	}
+
+	.draft-banner {
+		max-width: 960px;
+		margin: 0.5rem auto 0;
+		padding: 0.45rem 0.7rem;
+		border-radius: 8px;
+		font-size: 0.82rem;
+		font-weight: 700;
+		letter-spacing: 0.02em;
+		background: rgba(var(--ring), 0.22);
+		color: rgb(var(--black));
+		border: 1px solid rgba(var(--ring), 0.8);
 	}
 
 	@media (max-width: 760px) {

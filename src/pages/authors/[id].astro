@@ -17,7 +17,7 @@ if (!author) {
 	throw new Error('Author not found');
 }
 
-const previewDrafts = process.env.PREVIEW_DRAFTS === 'true';
+const previewDrafts = import.meta.env.PREVIEW_DRAFTS === 'true';
 
 const posts = (await getCollection('blog'))
 	.filter((post) => (previewDrafts || !post.data.draft) && post.data.authors.includes(author.id))

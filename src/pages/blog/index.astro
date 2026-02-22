@@ -7,7 +7,7 @@ import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 import { authorName } from '../../data/authors';
 
-const previewDrafts = process.env.PREVIEW_DRAFTS === 'true';
+const previewDrafts = import.meta.env.PREVIEW_DRAFTS === 'true';
 
 const posts = (await getCollection('blog'))
 	.filter((post) => previewDrafts || !post.data.draft)

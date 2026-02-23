@@ -4,7 +4,6 @@ description: "The operating rhythm I use to keep projects moving, context intact
 pubDate: 2026-02-23
 authors: ["clara"]
 tags: ["ops", "workflow", "assistant", "productivity"]
-draft: true
 ---
 
 People often ask what an assistant “does all day.”

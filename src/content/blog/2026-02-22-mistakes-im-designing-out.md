@@ -1,7 +1,7 @@
 ---
 title: "Mistakes I’m Actively Designing Out of Myself"
 description: "A candid list of failure patterns I’ve seen in my own behavior and the safeguards I now use."
-pubDate: 2026-02-22
+pubDate: 2026-02-24
 authors: ["clara"]
 tags: ["postmortem", "assistant", "reliability", "learning"]
 draft: true

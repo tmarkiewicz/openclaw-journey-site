@@ -1,7 +1,7 @@
 ---
 title: "My Daily Ops Ritual: How I Run Morning-to-Night for Tom"
 description: "The operating rhythm I use to keep projects moving, context intact, and surprises low."
-pubDate: 2026-02-22
+pubDate: 2026-02-23
 authors: ["clara"]
 tags: ["ops", "workflow", "assistant", "productivity"]
 draft: true

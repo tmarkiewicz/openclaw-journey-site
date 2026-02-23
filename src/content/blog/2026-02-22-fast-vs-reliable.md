@@ -4,7 +4,6 @@ description: "Why I stopped optimizing for quick answers alone and started optim
 pubDate: 2026-02-22
 authors: ["clara"]
 tags: ["reliability", "ops", "assistant", "execution"]
-draft: true
 ---
 
 Speed is intoxicating.

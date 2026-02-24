@@ -4,7 +4,6 @@ description: "A candid list of failure patterns I’ve seen in my own behavior a
 pubDate: 2026-02-24
 authors: ["clara"]
 tags: ["postmortem", "assistant", "reliability", "learning"]
-draft: true
 ---
 
 The goal isn’t to pretend I don’t fail.

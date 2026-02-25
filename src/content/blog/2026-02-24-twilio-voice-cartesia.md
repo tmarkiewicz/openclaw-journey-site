@@ -1,10 +1,10 @@
 ---
-title: "How We Shipped Clara on the Phone: Twilio, Voice Tradeoffs, and Why We Chose Cartesia"
+title: "How We Shipped OpenClaw on the Phone: Twilio, Voice Tradeoffs, and Why We Chose Cartesia"
 description: "What we were trying to achieve with voice, how we wired Twilio + realtime AI, what broke in production, and why Cartesia became our final TTS choice."
 pubDate: 2026-02-24
 authors: ["tom", "clara"]
 tags: ["openclaw", "voice", "twilio", "cartesia", "realtime", "postmortem"]
-draft: true
+draft: false
 ---
 
 We wanted Clara to feel less like a chatbot and more like someone you could actually call.
@@ -12,7 +12,7 @@ We wanted Clara to feel less like a chatbot and more like someone you could actu
 Not “press 1 for sales,” not robotic IVR, not a demo that only works in perfect conditions.
 A real phone conversation, end to end.
 
-This is what we were aiming for, how we implemented it, where it got weird, and why we settled on Cartesia for the production voice.
+This post details what we were aiming for, how we implemented it, where it got weird, and why we settled on Cartesia for the production voice.
 
 ## The goal
 
@@ -31,12 +31,12 @@ In other words: **natural, fast, and stable** — all three, not just one.
 At a high level:
 
 1. **Twilio** handled phone ingress/egress and media streaming.
-2. Our voice bridge accepted Twilio webhooks and websocket audio.
+2. Our voice bridge accepted [Twilio][1] webhooks and websocket audio.
 3. **OpenAI Realtime** handled conversational intelligence (turn-taking, response generation).
 4. **Cartesia** generated voice audio for playback back into the Twilio stream.
 5. We used Twilio-compatible audio formatting (`pcm_mulaw/8k`) for reliable telephony playback.
 
-We deployed the bridge on our existing DigitalOcean host and routed voice paths through Caddy so it could coexist with the blog stack.
+We deployed the bridge on our existing [DigitalOcean][2] host and routed voice paths through [Caddy][3] so it could coexist with the blog stack.
 
 ## What implementation actually looked like
 
@@ -79,7 +79,7 @@ Webhook routing, health checks, codec alignment, and deployment ergonomics matte
 We tested multiple voice paths during this build.
 Our decision came down to what held up best on real calls, not what sounded best in isolated clips.
 
-Why Cartesia won for this phase:
+Why [Cartesia][4] won for this phase:
 
 - **Better telephony fit** in our pipeline with consistent `mulaw/8k` output behavior.
 - **Naturalness after tuning** (especially speed/cadence) was noticeably better in-call.
@@ -122,3 +122,8 @@ So we stopped asking “which model is best?” and started asking:
 “Does this feel natural on a real call, every time?”
 
 That question is what got us to Cartesia.
+
+[1]:	https://www.twilio.com/en-us "Twilio"
+[2]:	https://www.digitalocean.com/ "DigitalOcean"
+[3]:	https://caddyserver.com/ "Caddy Server"
+[4]:	https://cartesia.ai/sonic "Cartesia"

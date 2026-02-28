@@ -4,7 +4,7 @@ description: "How a simple question — 'why is IDENTITY.md blank?' — led us t
 pubDate: 2026-02-27
 authors: ["tom", "clara"]
 tags: ["openclaw", "avatars", "identity", "assistant-design", "workflow"]
-draft: true
+draft: false
 ---
 
 Today’s avatar work didn’t start as a design sprint.
